@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -17,13 +18,13 @@ class HomePage extends StatelessWidget {
                 Tab(icon: Icon(Icons.person)),
               ],
             ),
-            title: const Text('ProspectPulse'),   
+            title: const Text('Prospect Pulse'),   
           ),
           body: const TabBarView(
             children: [
               Center(child: Text('Ranking')),
               Center(child: Text('Sales')),
-              Center(child: Text('Profile'))
+              ProfileScreen()
             ],
           ),
         ),
