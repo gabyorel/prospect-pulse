@@ -12,19 +12,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        children: <Widget>[
-          Consumer<ApplicationState>(
-            builder: (context, appState, _) => AuthFunc(
-                loggedIn: appState.loggedIn,
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.analytics)),
+                Tab(icon: Icon(Icons.attach_money)),
+                Tab(icon: Icon(Icons.person)),
+              ],
+            ),
+            title: const Text('ProspectPulse'),   
+          ),
+          body: TabBarView(
+            children: [
+              Consumer<ApplicationState>(
+                builder: (context, appState, _) =>
+                AuthFunc(loggedIn: appState.loggedIn,
                 signOut: () {
                   FirebaseAuth.instance.signOut();
                 }),
+              ),
+            ],
           ),
-        ],
-      )
+        ),
+      ),
     );
   }
-}
+}            
