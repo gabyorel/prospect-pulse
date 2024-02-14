@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
 class Ranking extends StatefulWidget {
-  const Ranking ({Key? key}): super(key: key);
+  const Ranking({Key? key}) : super(key: key);
 
   @override
   State<Ranking> createState() => _RankingView();
@@ -17,8 +17,8 @@ class _RankingView extends State<Ranking> {
 
   List userImage = [
     'https://picsum.photos/200/300?random=8',
-    'https://picsum.photos/200/300?random=8',
-    'https://picsum.photos/200/300?random=8',
+    'https://picsum.photos/200/300?random=12',
+    'https://picsum.photos/200/300?random=9',
   ];
 
   @override
@@ -34,24 +34,37 @@ class _RankingView extends State<Ranking> {
         body: Column(
           children: [
             Expanded(
-              child: Padding( 
+              child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: userImage.length,
                   itemBuilder: (context, index) {
                     return Card(
-                      shape: RoundedRectangleBorder( 
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       color: Colors.purple.shade100,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 10.0
+                            horizontal: 10.0, vertical: 10.0
                         ),
                         child: Row(
                           children: [
-                            // TO DO : add profile pictures
+                            userImage[index] != ''
+                                ? ProfilePicture(
+                                    name: '',
+                                    radius: 25,
+                                    fontsize: 18,
+                                    img: userImage[index],
+                                    random: true,
+                                  )
+                                : ProfilePicture(
+                                    name: userImage[index],
+                                    radius: 25,
+                                    fontsize: 18,
+                                    random: true,
+                                  ),
                             const SizedBox(
                               width: 10.0,
                             ),
