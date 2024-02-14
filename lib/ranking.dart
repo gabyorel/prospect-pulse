@@ -44,10 +44,10 @@ class _RankingView extends State<Ranking> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
-                      color: Colors.purple.shade100,
+                      color: Colors.grey.shade200,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0
+                            horizontal: 10.0, vertical: 10.0 
                         ),
                         child: Row(
                           children: [
@@ -66,13 +66,23 @@ class _RankingView extends State<Ranking> {
                                     random: true,
                                   ),
                             const SizedBox(
-                              width: 10.0,
+                              width: 20.0,
+                            ),
+                            Text('${index + 1}.',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 15.0,
                             ),
                             Expanded(
                               child: Text(
                                 userList[index],
                                 style: const TextStyle(
                                   color: Colors.black,
+                                  fontStyle: FontStyle.italic,
                                   fontSize: 16,
                                 ),
                                 maxLines: 2,
