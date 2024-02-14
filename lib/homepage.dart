@@ -1,11 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart' // new
-    hide EmailAuthProvider, PhoneAuthProvider;    // new
-import 'package:flutter/material.dart';           // new
-import 'package:provider/provider.dart';          // new
-
-import 'app_state.dart';                          // new
-import 'src/authentication.dart';                 // new
-import 'src/widgets.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -30,27 +23,10 @@ class HomePage extends StatelessWidget {
             children: [
               Center(child: Text('Ranking')),
               Center(child: Text('Sales')),
-              ProfileView()
+              Center(child: Text('Profile'))
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class ProfileView extends StatelessWidget {
-  const ProfileView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Consumer<ApplicationState>(
-        builder: (context, appState, _) =>
-        AuthFunc(loggedIn: appState.loggedIn,
-        signOut: () {
-          FirebaseAuth.instance.signOut();
-        }),
       ),
     );
   }
