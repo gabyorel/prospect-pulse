@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.15.4
   firebase_ui_auth: ^1.13.0
   provider: ^6.1.1
+  flutter_profile_picture: ^2.0.0
 
 dev_dependencies:
   flutter_test:
