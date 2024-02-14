@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "566026126040",
+    "project_id": "prospect-pulse",
+    "storage_bucket": "prospect-pulse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:566026126040:android:9158fbe9f36c8e8e984dad",
+        "android_client_info": {
+          "package_name": "com.example.prospect_pulse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYsvGMbgWJQX0j-Gt6Lcq2_Or5SU3QHp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
