@@ -26,19 +26,32 @@ class HomePage extends StatelessWidget {
             ),
             title: const Text('ProspectPulse'),   
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              Consumer<ApplicationState>(
-                builder: (context, appState, _) =>
-                AuthFunc(loggedIn: appState.loggedIn,
-                signOut: () {
-                  FirebaseAuth.instance.signOut();
-                }),
-              ),
+              Center(child: Text('Ranking')),
+              Center(child: Text('Sales')),
+              ProfileView()
             ],
           ),
         ),
       ),
     );
   }
-}            
+}
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Consumer<ApplicationState>(
+        builder: (context, appState, _) =>
+        AuthFunc(loggedIn: appState.loggedIn,
+        signOut: () {
+          FirebaseAuth.instance.signOut();
+        }),
+      ),
+    );
+  }
+}
