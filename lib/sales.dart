@@ -25,18 +25,17 @@ class SalesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sales'),
+        title: const Text('Sales'),
       ),
       body: SalesList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to sale form page to add new sale
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddSalePage()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -46,10 +45,10 @@ class SalesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('sales').snapshots(),
+      stream: FirebaseFirestore.instance.collection('sales').orderBy('date', descending: true).snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
         final sales = snapshot.data!.docs.map((doc) {
           final data = doc.data() as Map;
@@ -97,17 +96,17 @@ class AddSalePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ajoutez une vente'),
+        title: const Text('Ajoutez une vente'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               TextFormField(
                 controller: _productController,
-                decoration: InputDecoration(labelText: 'Produit'),
+                decoration: const InputDecoration(labelText: 'Produit'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Entrez un nom de produit';
@@ -117,7 +116,7 @@ class AddSalePage extends StatelessWidget {
               ),
               TextFormField(
                 controller: _priceController,
-                decoration: InputDecoration(labelText: 'Prix'),
+                decoration: const InputDecoration(labelText: 'Prix'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Entrez un prix';
@@ -127,7 +126,7 @@ class AddSalePage extends StatelessWidget {
               ),
               TextFormField(
                 controller: _quantityController,
-                decoration: InputDecoration(labelText: 'Quantité'),
+                decoration: const InputDecoration(labelText: 'Quantité'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Entrez une quantité';
@@ -137,7 +136,7 @@ class AddSalePage extends StatelessWidget {
               ),
               TextFormField(
                 controller: _customerController,
-                decoration: InputDecoration(labelText: 'Client'),
+                decoration: const InputDecoration(labelText: 'Client'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Entrez un client';
@@ -145,24 +144,21 @@ class AddSalePage extends StatelessWidget {
                   return null;
                 },
               ),
-              // Add form fields for other details
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Save the sale to Firestore
                     FirebaseFirestore.instance.collection('sales').add({
                       'product': _productController.text,
                       'price': double.parse(_priceController.text),
                       'quantity': int.parse(_quantityController.text),
                       'customer': _customerController.text,
                       'date': Timestamp.fromDate(DateTime.now()),
-                      'username': 'commercial',
+                      'username': FirebaseAuth.instance.currentUser!.email,
                     });
-                    // Navigate back to sales list page
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Enregistrer'),
+                child: const Text('Enregistrer'),
               ),
             ],
           ),
