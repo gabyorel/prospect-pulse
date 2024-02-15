@@ -1,6 +1,7 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:prospect_pulse/ranking.dart';
+import 'package:prospect_pulse/sales.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,10 +22,10 @@ class HomePage extends StatelessWidget {
             ),
             title: const Text('Prospect Pulse'),   
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
               Ranking(),
-              Center(child: Text('Sales')),
+              SalesPage(),
               ProfileScreen()
             ],
           ),

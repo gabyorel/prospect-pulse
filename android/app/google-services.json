@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "566026126040",
+    "firebase_url": "https://prospect-pulse-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "prospect-pulse",
     "storage_bucket": "prospect-pulse.appspot.com"
   },
