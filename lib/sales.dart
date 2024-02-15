@@ -25,7 +25,9 @@ class SalesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sales'),
+          centerTitle: true,
+          title: const Text('Sales'),
+          backgroundColor: Colors.white,
       ),
       body: SalesList(),
       floatingActionButton: FloatingActionButton(
