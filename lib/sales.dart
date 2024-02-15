@@ -20,177 +20,153 @@ class Sale {
   });
 }
 
-class SalesList extends StatelessWidget {
-  final Future<List<Sale>> sales;
-
-  SalesList({required this.sales});
-
+class SalesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Sale>>(
-      future: sales,
-      builder: (BuildContext context, AsyncSnapshot<List<Sale>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Erreur: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('Aucune vente disponible');
-        } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final Sale = snapshot.data![index];
-              return ListTile(
-                title: Text(Sale.product),
-                subtitle: Text('Prix: ${Sale.price} €'),
-              );
-            },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sales'),
+      ),
+      body: SalesList(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigate to sale form page to add new sale
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddSalePage()),
           );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class SalesList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('sales').snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
         }
+        final sales = snapshot.data!.docs.map((doc) {
+          final data = doc.data() as Map;
+          return Sale(
+            product: data['product'],
+            price: data['price'],
+            quantity: data['quantity'],
+            date: data['date'],
+            customer: data['customer'],
+            username: data['username'],
+          );
+        }).toList();
+
+        return ListView.builder(
+          itemCount: sales.length,
+          itemBuilder: (context, index) {
+            final sale = sales[index];
+            return ListTile(
+              title: Text('${sale.quantity} - ${sale.product}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Date: ${sale.date.toDate()}'),
+                  Text('Prix: \$${sale.price}'),
+                  Text('Client: ${sale.customer}'),
+                  Text('Commercial: ${sale.username}'),
+                ],
+              ),
+            );
+          },
+        );
       },
     );
   }
 }
 
-class AddSaleForm extends StatefulWidget {
-  @override
-  _AddSaleFormState createState() => _AddSaleFormState();
-}
-
-class _AddSaleFormState extends State<AddSaleForm> {
+class AddSalePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  String product = '';
-  double price = 0;
-  int quantity = 0;
-  Timestamp date = Timestamp.fromDate(DateTime.now());
-  String customer = '';
-  String username = 'commercial';
+  TextEditingController _productController = TextEditingController();
+  TextEditingController _priceController = TextEditingController();
+  TextEditingController _quantityController = TextEditingController();
+  TextEditingController _customerController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Ajouter une vente'),
-      content: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Produit'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Veuillez saisir un produit';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                product = value!;
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Prix'),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Veuillez saisir un prix';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                price = double.parse(value!);
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Quantité'),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Veuillez saisir une quantité';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                quantity = int.parse(value!);
-              },
-            ),
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Client'),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Veuillez saisir un client';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                quantity = int.parse(value!);
-              },
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Annuler'),
-        ),
-        ElevatedButton(
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              _formKey.currentState!.save();
-
-              final saleRef = FirebaseFirestore.instance.collection('sales');
-              await saleRef.add({
-                'product': product,
-                'price': price,
-                'quantity': quantity,
-                'date': date,
-                'customer': customer,
-                'username': username,
-              });
-              Navigator.of(context).pop();
-            }
-          },
-          child: Text('Ajouter'),
-        ),
-      ],
-    );
-  }
-}
-
-class SalesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Liste des ventes')),
-      body: SalesList(
-        sales: FirebaseFirestore.instance
-            .collection('sales')
-            .get()
-            .then((querySnapshot) {
-          return querySnapshot.docs.map((doc) {
-            final data = doc.data();
-            return Sale(
-              product: data['product'],
-              price: data['price'],
-              quantity: data['quantity'],
-              date: data['date'],
-              customer: data['customer'],
-              username: data['username'],
-            );
-          }).toList();
-        }),
+      appBar: AppBar(
+        title: Text('Ajoutez une vente'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => AddSaleForm(),
-          );
-        },
-        child: Icon(Icons.add),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _productController,
+                decoration: InputDecoration(labelText: 'Produit'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez un nom de produit';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _priceController,
+                decoration: InputDecoration(labelText: 'Prix'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez un prix';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _quantityController,
+                decoration: InputDecoration(labelText: 'Quantité'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez une quantité';
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: _customerController,
+                decoration: InputDecoration(labelText: 'Client'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Entrez un client';
+                  }
+                  return null;
+                },
+              ),
+              // Add form fields for other details
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Save the sale to Firestore
+                    FirebaseFirestore.instance.collection('sales').add({
+                      'product': _productController.text,
+                      'price': double.parse(_priceController.text),
+                      'quantity': int.parse(_quantityController.text),
+                      'customer': _customerController.text,
+                      'date': Timestamp.fromDate(DateTime.now()),
+                      'username': 'commercial',
+                    });
+                    // Navigate back to sales list page
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Enregistrer'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
