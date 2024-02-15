@@ -10,7 +10,7 @@ void main() async {
    options: DefaultFirebaseOptions.currentPlatform,
  );
 
- runApp(const ProspectPulse());
+ runApp(ProspectPulse());
 }
 
 class ProspectPulse extends StatelessWidget {

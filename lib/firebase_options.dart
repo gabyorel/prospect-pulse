@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '566026126040',
     projectId: 'prospect-pulse',
     authDomain: 'prospect-pulse.firebaseapp.com',
+    databaseURL: 'https://prospect-pulse-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'prospect-pulse.appspot.com',
   );
 
@@ -57,6 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:566026126040:android:9158fbe9f36c8e8e984dad',
     messagingSenderId: '566026126040',
     projectId: 'prospect-pulse',
+    databaseURL: 'https://prospect-pulse-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'prospect-pulse.appspot.com',
   );
 
@@ -65,6 +67,7 @@ class DefaultFirebaseOptions {
     appId: '1:566026126040:ios:435e6e8fd7c62f8c984dad',
     messagingSenderId: '566026126040',
     projectId: 'prospect-pulse',
+    databaseURL: 'https://prospect-pulse-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'prospect-pulse.appspot.com',
     iosBundleId: 'com.example.prospectPulse',
   );
@@ -74,6 +77,7 @@ class DefaultFirebaseOptions {
     appId: '1:566026126040:ios:2c2f2583671d203b984dad',
     messagingSenderId: '566026126040',
     projectId: 'prospect-pulse',
+    databaseURL: 'https://prospect-pulse-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'prospect-pulse.appspot.com',
     iosBundleId: 'com.example.prospectPulse.RunnerTests',
   );
