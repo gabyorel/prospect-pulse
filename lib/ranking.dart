@@ -91,7 +91,7 @@ class _RankingView extends State<Ranking> {
                                     width: 20.0,
                                   ),
                                   Text(
-                                    '${index + 1}.',
+                                    '${index + 1}.'.toString(),
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
@@ -109,6 +109,13 @@ class _RankingView extends State<Ranking> {
                                         fontSize: 16,
                                       ),
                                       maxLines: 2,
+                                    ),
+                                  ),
+                                  Text(
+                                    '\$${leaderBoard[index].value.toString()}',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ],
