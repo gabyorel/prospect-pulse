@@ -1,16 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-
-import 'auth_gate.dart';
+import 'package:prospect_pulse/auth_gate.dart';
+import 'package:prospect_pulse/firebase_options.dart';
 
 void main() async {
- WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp(
-   options: DefaultFirebaseOptions.currentPlatform,
- );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
- runApp(ProspectPulse());
+  runApp(const ProspectPulse());
 }
 
 class ProspectPulse extends StatelessWidget {

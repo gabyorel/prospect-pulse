@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             ),
             title: const Text('Prospect Pulse'),   
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               Ranking(),
               SalesPage(),

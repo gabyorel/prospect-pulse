@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Sale {
   final String product;
@@ -21,6 +21,8 @@ class Sale {
 }
 
 class SalesPage extends StatelessWidget {
+  const SalesPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class SalesPage extends StatelessWidget {
           title: const Text('Sales'),
           backgroundColor: Colors.white,
       ),
-      body: SalesList(),
+      body: const SalesList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -44,6 +46,8 @@ class SalesPage extends StatelessWidget {
 }
 
 class SalesList extends StatelessWidget {
+  const SalesList({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -88,11 +92,13 @@ class SalesList extends StatelessWidget {
 }
 
 class AddSalePage extends StatelessWidget {
+  AddSalePage({Key? key}) : super(key: key);
+
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _productController = TextEditingController();
-  TextEditingController _priceController = TextEditingController();
-  TextEditingController _quantityController = TextEditingController();
-  TextEditingController _customerController = TextEditingController();
+  final TextEditingController _productController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _customerController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
