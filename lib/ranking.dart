@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:prospect_pulse/sales.dart';
 
 class Ranking extends StatefulWidget {
   const Ranking({Key? key}) : super(key: key);
@@ -23,8 +25,35 @@ class _RankingView extends State<Ranking> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection('sales').snapshots(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return const CircularProgressIndicator();
+        }
+        final sales = snapshot.data!.docs.map((doc) {
+          final data = doc.data() as Map;
+          return Sale(
+            product: data['product'],
+            price: data['price'],
+            quantity: data['quantity'],
+            date: data['date'],
+            customer: data['customer'],
+            username: data['username'],
+          );
+        }).toList(); 
+
+        Map<String, double> userSales = {};
+        for (var sale in sales) {    
+          userSales[sale.username] = (userSales[sale.username] ?? 0.0)
+          + (sale.price * sale.quantity);
+        }
+
+        final leaderBoard = userSales.entries.toList()
+          ..sort((a, b) => b.value.compareTo(a.value));
+
+        return SafeArea(
+          child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: const Text('LeaderBoard'),
@@ -101,4 +130,6 @@ class _RankingView extends State<Ranking> {
       ),
     );
   }
+);
+}
 }
