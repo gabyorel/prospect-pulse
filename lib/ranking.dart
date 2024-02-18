@@ -11,18 +11,6 @@ class Ranking extends StatefulWidget {
 }
 
 class _RankingView extends State<Ranking> {
-  List userList = [
-    'John Doe',
-    'Jean Dupont',
-    'Tom Cruise',
-  ];
-
-  List userImage = [
-    'https://picsum.photos/200/300?random=8',
-    'https://picsum.photos/200/300?random=12',
-    'https://picsum.photos/200/300?random=9',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -67,7 +55,7 @@ class _RankingView extends State<Ranking> {
                       padding: const EdgeInsets.all(15.0),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: userImage.length,
+                        itemCount: userSales.length,
                         itemBuilder: (context, index) {
                           return Card(
                             shape: RoundedRectangleBorder(
@@ -106,7 +94,7 @@ class _RankingView extends State<Ranking> {
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontStyle: FontStyle.italic,
-                                        fontSize: 16,
+                                        fontSize: 18,
                                       ),
                                       maxLines: 2,
                                     ),
