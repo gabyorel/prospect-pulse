@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
-import 'package:prospect_pulse/sales.dart';
+import 'package:prospect_pulse/firebase_models.dart';
 
 class Ranking extends StatefulWidget {
   const Ranking({Key? key}) : super(key: key);

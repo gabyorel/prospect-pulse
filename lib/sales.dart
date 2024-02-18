@@ -1,24 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-class Sale {
-  final String product;
-  final double price;
-  final int quantity;
-  final Timestamp date;
-  final String customer;
-  final String username;
-
-  Sale({
-    required this.product,
-    required this.price,
-    required this.quantity,
-    required this.date,
-    required this.customer,
-    required this.username,
-  });
-}
+import 'package:prospect_pulse/firebase_models.dart';
 
 class SalesPage extends StatelessWidget {
   const SalesPage({Key? key}) : super(key: key);
